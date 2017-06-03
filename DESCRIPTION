@@ -1,0 +1,14 @@
+Package: zmpl
+Title: Zero Modified Poisson-Lindley distribution
+Version: 0.1-0
+Authors@R: c(person("Manoel","Santos-Neto", role = c("aut", "cre") , email = "zmpldistribution@gmail.com"),person("Marcelo","Bourguignon", role = c("aut"), email = "m.p.bourguignon@gmail.com"), person("Danillo","Xavier", role = c("ctb") , email = "danilloxavier@gmail.com"), person("Vera","Tomazella", role = c("ctb"), , email = "vera@ufscar.br"))
+Description: Functions for fitting, displaying and checking ZMPL distribution.
+Depends:
+    R (>= 3.3.3),
+    tolerance,
+    nortest
+License: GPL-2 | GPL-3
+Encoding: UTF-8
+LazyData: true
+URL: www.santosnetoce.com.br
+RoxygenNote: 5.0.1
