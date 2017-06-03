@@ -6,7 +6,9 @@ Description: Functions for fitting, displaying and checking ZMPL distribution.
 Depends:
     R (>= 3.3.3),
     tolerance,
-    nortest
+    nortest,
+    maxLik,
+    moments
 License: GPL-2 | GPL-3
 Encoding: UTF-8
 LazyData: true
