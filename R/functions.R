@@ -426,11 +426,14 @@ rZMPL <- function(n, theta, p0){
 #'@export
 #'
 
-fitted.zmpl <- function(x)
+fitted.zmpl <- function(x, family="zmpl")
 {
-
   x <- x
   n   <- length(x)
+
+if(family=="zmpl")
+{
+
   s <- mean(x)
   r <- sum(x^2)
 
@@ -452,6 +455,64 @@ fitted.zmpl <- function(x)
   }
 
   vp <- maxLik(fr,start = c(thetamm,PImm),method = "BFGS")
+}
+else if(family == "poisson")
+  {
+
+  fr <- function(vp)
+  {
+    theta <- vp[1]
+    l<- dpois(x, lambda = theta, log=TRUE)
+    return(sum(l))
+  }
+
+  vp <- maxLik(fr,start = mean(x),method = "BFGS")
+}
+
+else if(family == "zmp")
+  {
+
+  s <- mean(x)
+  r <- var(x)
+
+  a <- (r-s)/(s^2)
+
+
+  PImm <- a/(1+a)
+  thetamm <- s/(1-PImm)
+
+  fr  <- function(vP){
+    theta <- vP[1]
+    PI     <- vP[2]
+
+
+  #  l <- dzmpois(x, lambda = theta, p0=PI, log=TRUE)
+
+    l <- rep(NA, times = n)
+
+    for(i in 1:n)
+    {
+      if(x[i]==0) l[i] <-  log(PI + (1 - PI)*exp(-theta) )
+      else l[i] <- log(1-PI)  + dpois(x[i],lambda=theta,log=TRUE)
+    }
+
+    return(sum(l))
+  }
+
+  vp <- maxLik(fr,start = c(thetamm,PImm),method = "BFGS")
+
+}
+else{
+
+ fr <- function(vp)
+ {
+   theta <- vp[1]
+   l<- dpoislind(x, theta = theta, log=TRUE)
+   return(sum(l))
+ }
+
+ vp <- maxLik(fr,start = 1,method = "BFGS")
+}
 
 return(summary(vp))
 
