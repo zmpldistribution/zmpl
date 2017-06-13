@@ -4,19 +4,19 @@
 \alias{FIZMPL}
 \title{Zero Modified Poisson-Lindley (ZMPL) distribution}
 \usage{
-dZMPL(x, mu = 1, sigma = 1, nu=0.1, log = FALSE)
-pZMPL(q, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-qZMPL(p, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-rZMPL(n, mu = 1, sigma = 1)
-plotZMPL(mu = .5, sigma = 1,  nu=0.1, from = 0, to = 0.999, n = 101, ...)
+dZMPL(x, theta = 1, p0=0.1, log = FALSE)
+pZMPL(q, theta = 1, p0=0.1, lower.tail = TRUE, log.p = FALSE)
+qZMPL(p, theta = 1, p0=0.1, lower.tail = TRUE, log.p = FALSE)
+rZMPL(n, theta = 1, p0=0.1)
+plotZMPL(theta = 1, p0=0.1, from = 0, to = 0.999, n = 101, ...)
 meanZMPL(obj)
 }
 \arguments{
+\item{theta}{theta parameter values}
+
+\item{p0}{p0 parameter values}
+
 \item{x, q}{vector of observations/quantiles}
-
-\item{mu}{vector of scale parameter values}
-
-\item{sigma}{vector of shape parameter values}
 
 \item{log, }{log.p logical; if TRUE, probabilities p are given as log(p).}
 
@@ -32,9 +32,6 @@ meanZMPL(obj)
 
 \item{...}{other graphical parameters for plotting}
 }
-\value{
-returns a object of the ZMPL distribution.
-}
 \description{
 The fuction \code{ZMPL()} defines the ZMPL distribution, a two paramenter
 distribution. The zero modified Poisson-Lindley distribution is similar
@@ -48,10 +45,8 @@ value of the response for a fitted model.
 \details{
 The probability massa function of the is given by
 
-\deqn{ f_{Y}(y;\mu,\delta,p) =\frac{[1-p]\sqrt{\delta+1}}{4\,y^{3/2}\,\sqrt{\pi\mu}}\left[y+\frac{\delta\mu}{\delta+1} \right]\exp\left(-\frac{\delta}{4}\left[\frac{y[\delta+1]}{\delta\mu}+\frac{\delta\mu}{y[\delta+1]}-2\right]\right) I_{(0, \infty)}(y)+  pI_{\{0\}}(y).}
-}
-\note{
-For the function ZMPL(), mu is the mean and sigma is the precision parameter and nu is the proportion of zeros of the zero adjusted Birnbaum-Saunders distribution.
+\deqn{ f_{X}(x;\theta,p0) = p0 + (1-p0)*P[Y=0] I(y=0) + (1-p0)*P[Y>0] I(y>0)}
+where \deqn{P[Y=y]} is a probability massa function of the Poisson-Lindley distribution.
 }
 \examples{
 FIZMPL()
@@ -75,10 +70,10 @@ g$z <- z
 print(wireframe(z ~ x * y  ,g, xlab=expression(theta), scales = list(arrows = FALSE), ylab=expression(pi), zlab = "FI(X)") )
 }
 \author{
-Manoel Santos-Neto \email{manoel.ferreira@ufcg.edu.br}, F.J.A. Cysneiros \email{cysneiros@de.ufpe.br}, Victor Leiva \email{victorleivasanchez@gmail.com} and Michelli Barros \email{michelli.karinne@gmail.com}
+Manoel Santos-Neto \email{mn.neco@gmail.com}, Marcelo Bourguignon \email{m.p.bourguignon@gmail.com}, Danillo Xavier \email{danilloxavier@gmail.com} and Vera Tomazella \email{vera@ufscar.br}
 }
 \references{
-Leiva, V., Santos-Neto, M., Cysneiros, F.J.A., Barros, M. (2015) A methodology for stochastic inventory models based on a zero-adjusted Birnbaum-Saunders distribution.
-\emph{Applied Stochastic Models in Business and Industry.} \email{10.1002/asmb.2124}.
+Bourguignon, M., Xavier, D., Santos-Neto, M., Tomazella, V. (2017) The Modified Poisson-Lindley distribution: A model for overdispersed and underdispersed count data.
+\emph{manuscript.}
 }
 
