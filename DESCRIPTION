@@ -8,8 +8,7 @@ Depends:
     tolerance,
     nortest,
     maxLik,
-    moments,
-    actuar
+    moments
 License: GPL-2 | GPL-3
 Encoding: UTF-8
 LazyData: true
