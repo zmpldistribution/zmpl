@@ -510,6 +510,7 @@ else{
    l<- dpoislind(x, theta = theta, log=TRUE)
    return(sum(l))
  }
+ s <- mean(x)
  thetamm <-  (-(s-1) + sqrt( ((s-1)^2) + 8*s))/(2*s)
  vp <- maxLik(fr,start = thetamm,method = "BFGS")
 }
