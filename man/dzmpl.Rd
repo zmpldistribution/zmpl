@@ -4,75 +4,56 @@
 \alias{dzmpl}
 \title{Zero Modified Poisson-Lindley (ZMPL) distribution}
 \usage{
-dZMPL(x, mu = 1, sigma = 1, nu=0.1, log = FALSE)
-pZMPL(q, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-qZMPL(p, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-rZMPL(n, mu = 1, sigma = 1)
-plotZMPL(mu = .5, sigma = 1,  nu=0.1, from = 0, to = 0.999, n = 101, ...)
-meanZMPL(obj)
+dzmpl(x, theta,  p0 = 0, log = FALSE)
+pzmpl(q, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
+qzmpl(p, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
+rzmpl(n, theta = 5, p0 = 0)
 }
 \arguments{
 \item{x, q}{vector of observations/quantiles}
 
+\item{theta}{vector of scale parameter values}
+
+\item{p0}{vector of shape parameter values}
+
 \item{log, }{log.p logical; if TRUE, probabilities p are given as log(p).}
-
-\item{mu}{vector of scale parameter values}
-
-\item{sigma}{vector of shape parameter values}
 
 \item{lower.tail}{logical; if TRUE (default), probabilities are P[X <= x], otherwise, P[X > x]}
 
 \item{p}{vector of probabilities.}
 
 \item{n}{number of observations. If \code{length(n) > 1}, the length is taken to be the number required.}
-
-\item{from}{where to start plotting the distribution from}
-
-\item{to}{up to where to plot the distribution}
-
-\item{...}{other graphical parameters for plotting}
 }
 \value{
 returns a object of the ZMPL distribution.
 }
 \description{
-The fuction \code{ZMPL()} defines the ZMPL distribution, a two paramenter
-distribution. The zero modified Poisson-Lindley distribution is similar
-to the Poisson-Lindley distribution but allows zeros as y values. The extra parameter
-models the probabilities at zero. The functions dZMPL, pZMPL, qZMPL and rZMPL define
-the density, distribution function, quantile function and random generation for
-the zero modified Poisson-Lindley distribution.
-plotZMPL can be used to plot the distribution. meanZMPL calculates the expected
-value of the response for a fitted model.
+Density, distribution function, quantile function and random generation for the ZMPL distribution.
 }
 \details{
-The probability massa function of the is given by
+If \code{theta} or \code{p0} not specified they assume the default values of 5 and 0, respectively.
 
-\deqn{ f_{Y}(y;\mu,\delta,p) =\frac{[1-p]\sqrt{\delta+1}}{4\,y^{3/2}\,\sqrt{\pi\mu}}\left[y+\frac{\delta\mu}{\delta+1} \right]\exp\left(-\frac{\delta}{4}\left[\frac{y[\delta+1]}{\delta\mu}+\frac{\delta\mu}{y[\delta+1]}-2\right]\right) I_{(0, \infty)}(y)+  pI_{\{0\}}(y).}
+The ZMPL distribution has density:
+
+\deqn{
+Pr(X=k)=\left\{\begin{array}{ll} \pi + (1 - \pi)\frac{\theta^2(\theta + 2)}{(\theta + 1)^3},&k = 0,  \\&\\(1 - \pi)\frac{\theta^2(k + \theta + 2)}{(\theta + 1)^{k+3}},&k \in \mathbb{N}^{ {\tiny +}}. \end{array}\right.
+}
 }
 \note{
-For the function ZMPL(), mu is the mean and sigma is the precision parameter and nu is the proportion of zeros of the zero adjusted Birnbaum-Saunders distribution.
+For the function ZMPL(), p0 is the zero-modification
+parameter and different values lead to different
+modifications of the ZMPL distribution.
 }
 \examples{
-plotZARBS()
-dat <- rZARBS(1000); hist(dat)
-fit <- gamlss(dat~1,family=ZARBS(),method=CG())
-meanZABS(fit)
-
-data(papatoes);
-fit = gamlss(I(Demand/10000)~1,sigma.formula=~1, nu.formula=~1, family=ZARBS(mu.link="identity",sigma.link = "identity",nu.link = "identity"),method=CG(),data=papatoes)
-summary(fit)
-
-data(oil)
-fit1 = gamlss(Demand~1,sigma.formula=~1, nu.formula=~1, family=ZARBS(mu.link="identity",sigma.link = "identity",nu.link = "identity"),method=CG(),data=oil)
-summary(fit1)
+dat <- rzmpl(1000); plot(table(dat),type="h",xlab="x",ylab="PMF")
+fit <- fitzmpl(dat)
 
 }
 \author{
-Manoel Santos-Neto \email{manoel.ferreira@ufcg.edu.br}, F.J.A. Cysneiros \email{cysneiros@de.ufpe.br}, Victor Leiva \email{victorleivasanchez@gmail.com} and Michelli Barros \email{michelli.karinne@gmail.com}
+Manoel Santos-Neto \email{mn.neco@gmail.com}, Danillo Xavier \email{danilloxavier@gmail.com}, Marcelo Bourguignon \email{m.p.bourguignon@gmail.com} and Vera Tomazella \email{vera@ufscar.com}
 }
 \references{
-Leiva, V., Santos-Neto, M., Cysneiros, F.J.A., Barros, M. (2015) A methodology for stochastic inventory models based on a zero-adjusted Birnbaum-Saunders distribution.
-\emph{Applied Stochastic Models in Business and Industry.} \email{10.1002/asmb.2124}.
+Santos-Neto, M., Xavier, D., Bourguignon, M. and Tomazella, V. (2017) Zero-Modified Poisson-Lindley distribution with applications in inflated and deflated of zeros.
+\emph{to appear.}
 }
 

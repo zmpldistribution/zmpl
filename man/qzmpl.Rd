@@ -33,33 +33,27 @@ Density, distribution function, quantile function and random generation for the 
 \details{
 If \code{theta} or \code{p0} not specified they assume the default values of 5 and 0, respectively.
 
-The ZMPL distribution has density:S
+The ZMPL distribution has density:
 
-\deqn{ f_{Y}(y;\mu,\delta,p) =\frac{[1-p]\sqrt{\delta+1}}{4\,y^{3/2}\,\sqrt{\pi\mu}}\left[y+\frac{\delta\mu}{\delta+1} \right]\exp\left(-\frac{\delta}{4}\left[\frac{y[\delta+1]}{\delta\mu}+\frac{\delta\mu}{y[\delta+1]}-2\right]\right) I_{(0, \infty)}(y)+  pI_{\{0\}}(y).}
+\deqn{
+Pr(X=k)=\left\{\begin{array}{ll} \pi + (1 - \pi)\frac{\theta^2(\theta + 2)}{(\theta + 1)^3},&k = 0,  \\&\\(1 - \pi)\frac{\theta^2(k + \theta + 2)}{(\theta + 1)^{k+3}},&k \in \mathbb{N}^{ {\tiny +}}. \end{array}\right.
+}
 }
 \note{
-For the function ZMPL(), mu is the mean and sigma is the precision parameter and nu is the proportion of zeros of the zero adjusted Birnbaum-Saunders distribution.
+For the function ZMPL(), p0 is the zero-modification
+parameter and different values lead to different
+modifications of the ZMPL distribution.
 }
 \examples{
-plotZARBS()
-dat <- rZARBS(1000); hist(dat)
-fit <- gamlss(dat~1,family=ZARBS(),method=CG())
-meanZABS(fit)
-
-data(papatoes);
-fit = gamlss(I(Demand/10000)~1,sigma.formula=~1, nu.formula=~1, family=ZARBS(mu.link="identity",sigma.link = "identity",nu.link = "identity"),method=CG(),data=papatoes)
-summary(fit)
-
-data(oil)
-fit1 = gamlss(Demand~1,sigma.formula=~1, nu.formula=~1, family=ZARBS(mu.link="identity",sigma.link = "identity",nu.link = "identity"),method=CG(),data=oil)
-summary(fit1)
+dat <- rzmpl(1000); plot(table(dat),type="h",xlab="x",ylab="PMF")
+fit <- fitzmpl(dat)
 
 }
 \author{
-Manoel Santos-Neto \email{manoel.ferreira@ufcg.edu.br}, F.J.A. Cysneiros \email{cysneiros@de.ufpe.br}, Victor Leiva \email{victorleivasanchez@gmail.com} and Michelli Barros \email{michelli.karinne@gmail.com}
+Manoel Santos-Neto \email{mn.neco@gmail.com}, Danillo Xavier \email{danilloxavier@gmail.com}, Marcelo Bourguignon \email{m.p.bourguignon@gmail.com} and Vera Tomazella \email{vera@ufscar.com}
 }
 \references{
-Leiva, V., Santos-Neto, M., Cysneiros, F.J.A., Barros, M. (2015) A methodology for stochastic inventory models based on a zero-adjusted Birnbaum-Saunders distribution.
-\emph{Applied Stochastic Models in Business and Industry.} \email{10.1002/asmb.2124}.
+Santos-Neto, M., Xavier, D., Bourguignon, M. and Tomazella, V. (2017) Zero-Modified Poisson-Lindley distribution with applications in inflated and deflated of zeros.
+\emph{to appear.}
 }
 
