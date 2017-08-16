@@ -1,35 +1,25 @@
 #'Zero Modified Poisson-Lindley (ZMPL) distribution
 #'
-#'@description The fuction \code{ZMPL()} defines the ZMPL distribution, a two paramenter
-#'distribution. The zero modified Poisson-Lindley distribution is similar
-#'to the Poisson-Lindley distribution but allows zeros as y values. The extra parameter
-#'models the probabilities at zero. The functions dZMPL, pZMPL, qZMPL and rZMPL define
-#'the density, distribution function, quantile function and random generation for
-#'the zero modified Poisson-Lindley distribution.
-#'plotZMPL can be used to plot the distribution. meanZMPL calculates the expected
-#'value of the response for a fitted model.
+#'@description Density, distribution function, quantile function and random generation for the ZMPL distribution.
 #'
 #'@usage
-#'dZMPL(x, mu = 1, sigma = 1, nu=0.1, log = FALSE)
-#'pZMPL(q, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-#'qZMPL(p, mu = 1, sigma = 1,  nu=0.1, lower.tail = TRUE, log.p = FALSE)
-#'rZMPL(n, mu = 1, sigma = 1)
-#'plotZMPL(mu = .5, sigma = 1,  nu=0.1, from = 0, to = 0.999, n = 101, ...)
-#'meanZMPL(obj)
+#'dzmpl(x, theta,  p0 = 0, log = FALSE)
+#'pzmpl(q, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
+#'qzmpl(p, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
+#'rzmpl(n, theta = 5, p0 = 0)
 #'
 #' @param x,q vector of observations/quantiles
-#' @param mu vector of scale parameter values
-#' @param sigma vector of shape parameter values
+#' @param theta vector of scale parameter values
+#' @param p0 vector of shape parameter values
 #' @param log, log.p logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail logical; if TRUE (default), probabilities are P[X <= x], otherwise, P[X > x]
 #' @param p vector of probabilities.
 #' @param n number of observations. If \code{length(n) > 1}, the length is taken to be the number required.
-#' @param from where to start plotting the distribution from
-#' @param to up to where to plot the distribution
-#' @param ... other graphical parameters for plotting
 #'
 #'
-#' @details  The probability massa function of the is given by
+#' @details  If \code{theta} or \code{p0} not specified they assume the default values of 5 and 0, respectively.
+#'
+#'The ZMPL distribution has density:S
 #'
 #'\deqn{ f_{Y}(y;\mu,\delta,p) =\frac{[1-p]\sqrt{\delta+1}}{4\,y^{3/2}\,\sqrt{\pi\mu}}\left[y+\frac{\delta\mu}{\delta+1} \right]\exp\left(-\frac{\delta}{4}\left[\frac{y[\delta+1]}{\delta\mu}+\frac{\delta\mu}{y[\delta+1]}-2\right]\right) I_{(0, \infty)}(y)+  pI_{\{0\}}(y).}
 #'
@@ -60,7 +50,7 @@
 #'@export
 #'
 
-qZMPL <- function (p, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
+qzmpl <- function (p, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
 {
   if (log.p == TRUE)
     p <- exp(p)
@@ -140,7 +130,7 @@ qZMPL <- function (p, theta = 5, p0 = 0, lower.tail = TRUE, log.p = FALSE)
 #'
 #'@export
 #'
-pZMPL <- function (q, theta = 5, p0=0, lower.tail = TRUE, log.p = FALSE)
+pzmpl <- function (q, theta = 5, p0=0, lower.tail = TRUE, log.p = FALSE)
 {
   cdf <- rep(0, length(q))
   cdf <- ppoislind(q, theta = theta, lower.tail = TRUE, log.p = FALSE)
@@ -217,7 +207,7 @@ pZMPL <- function (q, theta = 5, p0=0, lower.tail = TRUE, log.p = FALSE)
 #'@export
 #'
 
-dZMPL <- function (x, theta,  p0 = 0, log = FALSE)
+dzmpl <- function (x, theta=5,  p0 = 0, log = FALSE)
 {
   ans <- NULL
   x1 <- min(x)
@@ -337,7 +327,7 @@ dZMPL <- function (x, theta,  p0 = 0, log = FALSE)
 #'
 #'@export
 #'
-rZMPL <- function(n, theta, p0){
+rzmpl <- function(n, theta=5, p0=0){
 
   deflat.limit <- - (   ((theta^2)*(theta+2)) /( (theta^2) +3*theta+1)     )
 
@@ -580,7 +570,7 @@ return(summary(vp))
 #'
 #'@export
 
-descriptive_zmpl <- function(x)
+descriptive.zmpl <- function(x)
 {
 
   barx <- mean(x)
@@ -663,17 +653,13 @@ descriptive_zmpl <- function(x)
 #'print(wireframe(z ~ x * y  ,g, xlab=expression(theta), scales = list(arrows = FALSE), ylab=expression(pi), zlab = "FI(X)") )
 #'@export
 
-FIZMPL <- function(theta, p0)
+fi.zmpl <- function(theta, p0)
 {
-
-  p <- - (   (theta^2)*(theta+2)/( (theta^2) +3*theta+1) )
-
-
-  mPL <- (theta+2)/(theta*(theta+1))
+  muPL <- (theta+2)/(theta*(theta+1))
   varPL <- ((theta^3) + 4*(theta^2) + 6*theta +2)/(theta*theta*(theta+1)*(theta+1))
   FIY <- varPL/mPL
 
-  FIX <- mPL*p0 + FIY
+  FIX <- muPL*p0 + FIY
 
   FIX
 }
