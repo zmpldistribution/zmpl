@@ -455,7 +455,7 @@ else{
  vp <- maxLik(fr,start = thetamm,method = "BFGS")
 }
 
-summary(vp)
+vp
 
 }
 
