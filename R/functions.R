@@ -394,7 +394,7 @@ if(family=="zmpl")
     return(sum(l))
   }
 
-  vp <- maxLik(fr,start = c(thetamm,PImm),method = "BFGS")
+  vp <- maxLik(fr,start = c(theta1=thetamm,theta2=PImm),method = "BFGS")
 }
 else if(family == "poisson")
   {
@@ -406,7 +406,7 @@ else if(family == "poisson")
     return(sum(l))
   }
 
-  vp <- maxLik(fr,start = mean(x),method = "BFGS")
+  vp <- maxLik(fr,start = c(theta1=mean(x)),method = "BFGS")
 }
 
 else if(family == "zmp")
@@ -439,7 +439,7 @@ else if(family == "zmp")
     return(sum(l))
   }
 
-  vp <- maxLik(fr,start = c(thetamm,PImm),method = "BFGS")
+  vp <- maxLik(fr,start = c(theta1=thetamm,theta2=PImm),method = "BFGS")
 
 }
 else{
@@ -452,7 +452,7 @@ else{
  }
  s <- mean(x)
  thetamm <-  (-(s-1) + sqrt( ((s-1)^2) + 8*s))/(2*s)
- vp <- maxLik(fr,start = thetamm,method = "BFGS")
+ vp <- maxLik(fr,start = c(theta1=thetamm),method = "BFGS")
 }
 
 vp
