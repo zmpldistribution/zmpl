@@ -366,7 +366,7 @@ rzmpl <- function(n, theta=5, p0=0){
 #'@export
 #'
 
-fitzmpl <- function(x, family="zmpl")
+mle <- function(x, family="zmpl")
 {
   x <- x
   n   <- length(x)
@@ -455,7 +455,7 @@ else{
  vp <- maxLik(fr,start = thetamm,method = "BFGS")
 }
 
-return(summary(vp))
+summary(vp)
 
 }
 
